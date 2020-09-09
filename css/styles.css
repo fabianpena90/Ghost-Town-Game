@@ -1,5 +1,6 @@
 body {
-  background: url('/img/backgroundpage.jpg') no-repeat ;
+  background: url('/img/backgroundpage.jpg') no-repeat;
+  overflow: hidden;
 }
 
 h1 {
@@ -44,5 +45,5 @@ h2 {
   display: flex;
   justify-content: center;
   align-content: center;
-  margin: auto;
+  margin: 0 auto;
 }

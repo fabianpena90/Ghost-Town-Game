@@ -145,6 +145,7 @@ function onClick() {
   // console.log('clicked')
   document.querySelector('.game').style.display = 'block'
   document.querySelector('.container').style.display = 'none'
+  document.querySelector('h1').style.fontSize = '2rem'
   animate()
   startGame()
   //scaryAudio.play()
