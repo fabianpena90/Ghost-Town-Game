@@ -4,15 +4,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/styles.css">
   <title>Ghost Town</title>
 </head>
 
 <body onload="booAudio()">
-  <h1>Ghost Town</h1>
+  <h1 data-text="ghost town"><span>Ghost Town</span></h1>
 
   <div class="container">
-    <h2>How to Play</h2>
+    <h2 class="neon">How to Play</h2>
     <div class="controls">
       <img src="img/left.png" alt="keys" width="100" height="100">
       <img src="img/right.png" alt="keys" width="100" height="100">
@@ -21,9 +22,10 @@
       <br>
       <img src="img/Key_space_Icon.png" alt="" width="200" height="100">
     </div>
-    <button class="btn">Play</button>
+    <button class="btn neon">Play</button>
   </div>
 
+  <img class="game-over" src="/img/GameOver.png" alt="Game Over" style="display: none;" width="800">
   <div class="game" style="display: none">
     <canvas id="canvas" width="1000" height="650"></canvas>
   </div>

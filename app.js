@@ -4,16 +4,20 @@ const ctx = canvas.getContext('2d');
 const background = new Image();
 background.src = 'img/scareBackground.jpg'
 const avatar = new Image();
-avatar.src = 'img/superman.png'
+avatar.src = 'img/potter.png'
 const thugs = new Image();
 thugs.src = 'img/eyeHanging.png'
 const ghost = new Image();
 ghost.src = 'img/ghost.png'
+const malo = new Image();
+malo.src = 'img/malo.png'
 const boom = new Image();
 boom.src = 'img/fire.png'
 const scaryAudio = new Audio('audio/evilLaugh.mp3');
 const piupiu = new Audio('audio/poonpoon.mp3');
 const explosion = new Audio('audio/explosion.mp3');
+const gameOver = new Audio('audio/gameOver.mp3');
+const gameSong = new Audio('audio/gameSong.mp3');
 let id = null;
 
 // Class players
@@ -70,28 +74,32 @@ class Enemies {
       player1.x + player1.w > this.x &&
       player1.y < this.y + this.h &&
       player1.y + player1.h > this.y) {
-      window.cancelAnimationFrame(id)
-      alert('You fucking suck!')
-      document.location.reload();
+      window.cancelAnimationFrame(id);
+      gameOver.play();
+      died();
+      // alert('You fucking suck!')
+      // document.location.reload();
     }
     for (let bullet of bullets) {
       if (bullet.x < this.x + this.w &&
         bullet.x + bullet.w > this.x &&
         bullet.y < this.y + this.h &&
         bullet.y + bullet.h > this.y) {
-        killers.splice(killers.indexOf(this), 1)
-        bullets.splice(bullets.indexOf(bullet), 1)
-        explosion.play()
+        killers.splice(killers.indexOf(this), 1);
+        bullets.splice(bullets.indexOf(bullet), 1);
+        explosion.play();
       }
     }
   }
 }
 
+// Function Game Over
+
 // Creating multiple enemies
 let killers = [new Enemies(thugs, canvas.width - 100, canvas.height / 2 + 150, 50, 50),
   new Enemies(thugs, canvas.width - 100, canvas.height / 2 + 150, 100, 100),
   new Enemies(ghost, canvas.width - 400, canvas.height / 2 + 290, 150, 150),
-  new Enemies(thugs, canvas.width - 200, canvas.height / 2 + 100, 50, 50)
+  new Enemies(malo, canvas.width - 200, canvas.height / 2 + 100, 100, 100)
 ]
 
 // Creating interval to add new enemies
@@ -100,7 +108,8 @@ let randomKillers = () => Math.floor(Math.random() * canvas.width);
 function startGame() {
   setInterval(function () {
     killers.push(new Enemies(ghost, randomKillers() + 100, randomKillers() + 150, 50, 50),
-      new Enemies(ghost, randomKillers() + 100, randomKillers() + 250, 75, 75))
+      new Enemies(ghost, randomKillers() + 100, randomKillers() + 250, 75, 75),
+      new Enemies(malo, randomKillers() + 100, randomKillers() + 250, 100, 100))
   }, 2000)
 }
 
@@ -108,6 +117,18 @@ function startGame() {
 window.onkeydown = function (e) {
   // console.log(e.key);
   switch (e.key) {
+    case "w":
+      player1.y -= 20;
+      break;
+    case "s":
+      player1.y += 20;
+      break;
+    case "a":
+      player1.x -= 20;
+      break;
+    case "d":
+      player1.x += 20;
+      break;
     case "ArrowUp":
       player1.y -= 20;
       break;
@@ -162,12 +183,18 @@ function onClick() {
   document.querySelector('h1').style.fontSize = '2rem'
   animate()
   startGame()
-  //scaryAudio.play()
+  gameSong.play()
 }
 
+// Landing page Audio
 const landingPage = document.querySelector('body');
 landingPage.addEventListener('onload', booAudio);
 
 function booAudio() {
   scaryAudio.play()
+}
+
+function died() {
+  document.querySelector('.game-over').style.display = 'block'
+  document.querySelector('.game').style.display = 'none'
 }
