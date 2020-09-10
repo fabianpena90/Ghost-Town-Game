@@ -1,17 +1,19 @@
 //  Defining Canvas
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
-const background = new Image()
-background.src = 'img/city_background_1024x512-.jpg'
-const avatar = new Image()
+const background = new Image();
+background.src = 'img/scareBackground.jpg'
+const avatar = new Image();
 avatar.src = 'img/superman.png'
-const thugs = new Image()
+const thugs = new Image();
 thugs.src = 'img/eyeHanging.png'
-const ghost = new Image()
+const ghost = new Image();
 ghost.src = 'img/ghost.png'
-const boom = new Image()
+const boom = new Image();
 boom.src = 'img/fire.png'
-const scaryAudio = new Audio('audio/evilLaugh.mp3')
+const scaryAudio = new Audio('audio/evilLaugh.mp3');
+const piupiu = new Audio('audio/poonpoon.mp3');
+const explosion = new Audio('audio/explosion.mp3');
 let id = null;
 
 // Class players
@@ -19,7 +21,7 @@ class Character {
   constructor(img, x, y, w, h) {
     this.img = img;
     this.x = x;
-    this.y = y; 
+    this.y = y;
     this.w = w;
     this.h = h;
   }
@@ -29,7 +31,7 @@ class Character {
 }
 
 // Creating players
-let player1 = new Character(avatar, canvas.width / - 100, canvas.height / 2 + 200, 50, 50)
+let player1 = new Character(avatar, canvas.width / -100, canvas.height / 2 + 200, 50, 50)
 
 // Creating bullets
 let bullets = [];
@@ -38,6 +40,7 @@ let bullets = [];
 class Bullets {
   constructor(img, x, y, w, h) {
     this.img = img
+    // this.sound = sound
     this.x = x;
     this.y = y;
     this.w = w;
@@ -46,7 +49,7 @@ class Bullets {
   }
   drawBullet = () => {
     ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
-    this.x++
+    this.x += 5
   }
 }
 
@@ -78,6 +81,7 @@ class Enemies {
         bullet.y + bullet.h > this.y) {
         killers.splice(killers.indexOf(this), 1)
         bullets.splice(bullets.indexOf(bullet), 1)
+        explosion.play()
       }
     }
   }
@@ -102,7 +106,7 @@ function startGame() {
 
 // Control player
 window.onkeydown = function (e) {
-  console.log(e.key);
+  // console.log(e.key);
   switch (e.key) {
     case "ArrowUp":
       player1.y -= 20;
@@ -117,16 +121,26 @@ window.onkeydown = function (e) {
       player1.x += 20;
       break;
     case " ":
-      console.log(player1)
+      // console.log(player1)
       bullets.push(new Bullets(boom, player1.x + player1.w / 2, player1.y + player1.h / 2, 15, 15))
+      piupiu.play()
       break;
   }
 };
 
+// Background image looping variable
+let x = 0
+
 // Game Init
 function animate() {
   id = window.requestAnimationFrame(animate);
-  ctx.drawImage(background, 0, 0, canvas.width, canvas.height)
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  for (var w = x--; w < canvas.width; w += background.width) {
+    for (var h = 0; h < canvas.height; h += background.height) {
+      console.log('he')
+      ctx.drawImage(background, w, h);
+    }
+  }
   player1.drawAvatar()
   for (killer of killers) {
     killer.drawEnemy()

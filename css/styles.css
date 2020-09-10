@@ -13,16 +13,17 @@ h2 {
   color: rgb(240, 0, 0);
   text-align: center;
   font-size: 3rem;
+  margin-left: 100px;
 }
 
 .container {
   display: flex;
-  flex-direction: column;;
+  flex-direction: column;
 }
 
 .controls {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
 }
 
 .btn {
@@ -33,7 +34,7 @@ h2 {
   background-color: transparent;
   color: #fff;
   width: 20%;
-  margin: 0 auto;
+  margin: 40px auto;
 }
 
 .btn:hover {
@@ -47,3 +48,5 @@ h2 {
   align-content: center;
   margin: 0 auto;
 }
+
+/* Chat */
