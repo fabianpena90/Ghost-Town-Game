@@ -2,16 +2,16 @@
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 const background = new Image()
-background.src = '/img/city_background_1024x512-.jpg'
+background.src = 'img/city_background_1024x512-.jpg'
 const avatar = new Image()
-avatar.src = '/img/superman.png'
+avatar.src = 'img/superman.png'
 const thugs = new Image()
-thugs.src = '/img/eyeHanging.png'
+thugs.src = 'img/eyeHanging.png'
 const ghost = new Image()
-ghost.src = '/img/ghost.png'
+ghost.src = 'img/ghost.png'
 const boom = new Image()
-boom.src = '/img/fire.png'
-const scaryAudio = new Audio('/audio/evilLaugh.mp3')
+boom.src = 'img/fire.png'
+const scaryAudio = new Audio('audio/evilLaugh.mp3')
 let id = null;
 
 // Class players
