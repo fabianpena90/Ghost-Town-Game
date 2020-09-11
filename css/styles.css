@@ -165,3 +165,13 @@ h1::after {
   border: 5px solid black;
   border-radius: 30px;
 }
+
+/* API */
+
+.gif {
+  margin: 0 auto;
+}
+
+iframe {
+  pointer-events: none;
+}
