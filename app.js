@@ -24,13 +24,14 @@ let id = null;
 
 // Class players
 class Character {
-  constructor(img, x, y, w, h, score) {
+  constructor(img, x, y, w, h, score, lives) {
     this.img = img;
     this.x = x;
     this.y = y;
     this.w = w;
     this.h = h;
     this.score = 0;
+    this.lives = 3
   }
   drawAvatar = () => {
     ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
@@ -45,6 +46,23 @@ function drawScore(text, x, y, color) {
   ctx.fillStyle = color;
   ctx.font = '20px monospace';
   ctx.fillText(text, x, y);
+
+}
+
+// Functions Lives
+function drawLives(text, x, y, color) {
+  ctx.fillStyle = color;
+  ctx.font = '20px monospace';
+  ctx.fillText(text, x, y);
+}
+
+// Function Reset
+function reset() {
+  player1.x = canvas.width / -100;
+  player1.y - canvas.height / 2 + 200;
+
+  killers.x = canvas.width - 100;
+  killers.y = canvas.height / 2 + 150;
 }
 
 // Creating bullets
@@ -82,9 +100,20 @@ class Enemies {
       player1.x + player1.w > this.x &&
       player1.y < this.y + this.h &&
       player1.y + player1.h > this.y) {
+      reset()
+      player1.lives--
+    } if (player1.score === 50) {
+        alert('Congratulations you have won!')
+        window.cancelAnimationFrame(id)      
+        window.reload()
+    }
+    if (player1.lives === 0) {
+      // location.reload()
       window.cancelAnimationFrame(id);
-      gameOver.play();
-      died();
+      setInterval(() => {
+        gameOver.play();
+        died();
+      }, 1000);
     }
     for (let bullet of bullets) {
       if (bullet.x < this.x + this.w &&
@@ -112,11 +141,11 @@ let randomKillers = () => Math.floor(Math.random() * canvas.width);
 let randomGhosts = () => Math.floor(Math.random() * canvas.height);
 
 function startGame() {
-  setInterval(function() {
-    killers.push(new Enemies(ghost, randomKillers() + 30, randomKillers() + 150, 50, 50),
+  setInterval(function () {
+    killers.push(new Enemies(ghost, randomKillers() + 30, randomGhosts(), 50, 50),
       new Enemies(ghost, randomKillers() + 75, randomGhosts(), 75, 75),
-      new Enemies(malo, randomKillers() + 75, randomKillers() - 50, 100, 100))
-    }, 2000);
+      new Enemies(malo, randomKillers() + 75, randomGhosts(), 100, 100))
+  }, 2000);
 }
 
 // Control player
@@ -172,10 +201,11 @@ function animate() {
     killer.drawEnemy()
     killer.checkCollision()
   }
-  for(bullet of bullets) {
+  for (bullet of bullets) {
     bullet.drawBullet();
   }
-  drawScore("Score: " + player1.score, canvas.width / 15, canvas.height / 14, 'red');
+  drawScore("Score: " + player1.score, canvas.width / 15, canvas.height / 14, 'white');
+  drawLives("Lives: " + player1.lives, canvas.width - 150, canvas.height / 14, 'white');
 }
 
 // Landing Page Event Listeners
@@ -203,6 +233,7 @@ function booAudio() {
 function died() {
   document.querySelector('.game-over').style.display = 'block';
   document.querySelector('.game').style.display = 'none';
+  document.querySelector('.reset').style.display = 'block';
 }
 
 // API Giphy
