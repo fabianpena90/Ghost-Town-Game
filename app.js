@@ -16,8 +16,9 @@ boom.src = 'img/fire.png';
 const coin = new Image();
 coin.src = '/img/coins.png';
 const scaryAudio = new Audio('audio/evilLaugh.mp3');
-const piupiu = new Audio('audio/poonpoon.mp3');
+const piupiu = new Audio('audio/gunshot.mp3');
 const explosion = new Audio('audio/explosion.mp3');
+const ouch = new Audio('audio/ouch.mp3');
 const gameOver = new Audio('audio/gameOver.mp3');
 const gameSong = new Audio('audio/gameSong.mp3');
 let id = null;
@@ -44,7 +45,7 @@ let player1 = new Character(avatar, canvas.width / -100, canvas.height / 2 + 200
 // Function Score
 function drawScore(text, x, y, color) {
   ctx.fillStyle = color;
-  ctx.font = '20px monospace';
+  ctx.font = '20px Play';
   ctx.fillText(text, x, y);
 
 }
@@ -52,17 +53,17 @@ function drawScore(text, x, y, color) {
 // Functions Lives
 function drawLives(text, x, y, color) {
   ctx.fillStyle = color;
-  ctx.font = '20px monospace';
+  ctx.font = '20px Play';
   ctx.fillText(text, x, y);
 }
 
 // Function Reset
 function reset() {
   player1.x = canvas.width / -100;
-  player1.y - canvas.height / 2 + 200;
+  player1.y = canvas.height / 2 + 200;
 
-  killers.x = canvas.width - 100;
-  killers.y = canvas.height / 2 + 150;
+  killer.x = canvas.width - 100;
+  killer.y = canvas.height / 2 + 150;
 }
 
 // Creating bullets
@@ -100,18 +101,21 @@ class Enemies {
       player1.x + player1.w > this.x &&
       player1.y < this.y + this.h &&
       player1.y + player1.h > this.y) {
-      reset()
-      player1.lives--
-    } if (player1.score === 50) {
-        alert('Congratulations you have won!')
-        window.cancelAnimationFrame(id)      
-        window.reload()
+        player1.lives--
+        ouch.play()
+        reset()
+    }
+    if (player1.score === 50) {
+      // youWin();
+      window.cancelAnimationFrame(id)
+      alert('YOU WIN 👻')
+      location.reload()
     }
     if (player1.lives === 0) {
       // location.reload()
       window.cancelAnimationFrame(id);
+      gameOver.play();
       setInterval(() => {
-        gameOver.play();
         died();
       }, 1000);
     }
@@ -142,10 +146,10 @@ let randomGhosts = () => Math.floor(Math.random() * canvas.height);
 
 function startGame() {
   setInterval(function () {
-    killers.push(new Enemies(ghost, randomKillers() + 30, randomGhosts(), 50, 50),
-      new Enemies(ghost, randomKillers() + 75, randomGhosts(), 75, 75),
-      new Enemies(malo, randomKillers() + 75, randomGhosts(), 100, 100))
-  }, 2000);
+    killers.push(new Enemies(thugs, randomKillers() - 130, randomGhosts() / 2, 50, 50),
+      new Enemies(ghost, randomKillers() - 100, randomGhosts(), 75, 75),
+      new Enemies(malo, randomKillers() - 100, randomGhosts(), 100, 100))
+  }, 4000);
 }
 
 // Control player
@@ -198,8 +202,8 @@ function animate() {
   }
   player1.drawAvatar()
   for (killer of killers) {
-    killer.drawEnemy()
-    killer.checkCollision()
+    killer.drawEnemy();
+    killer.checkCollision();
   }
   for (bullet of bullets) {
     bullet.drawBullet();
@@ -230,6 +234,14 @@ function booAudio() {
   scaryAudio.play();
 }
 
+// Function Win
+// function youWin() {
+//   document.querySelector('.win').style.display = 'block';
+//   document.querySelector('.game').style.display = 'none';
+//   document.querySelector('h1').style.fontSize = '2rem';
+// }
+
+// Function Died
 function died() {
   document.querySelector('.game-over').style.display = 'block';
   document.querySelector('.game').style.display = 'none';
@@ -246,4 +258,11 @@ function giphy() {
     const randomGif = Math.floor(Math.random() * data.length);
     document.querySelector('.gif').innerHTML += `<iframe src="${data.embed_url}" width="480" height="201" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/wilderpeople-hunt-for-the-wilderpeople-orchard-julian-dennison-l0HlRU3kWnmqbbuuI"></a></p>`
   })
+}
+
+// Play again function
+document.querySelector('.reset').addEventListener('click', playAgain)
+
+function playAgain() {
+  location.reload()
 }

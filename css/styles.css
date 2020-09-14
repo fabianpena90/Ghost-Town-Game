@@ -156,7 +156,7 @@ h1::after {
   justify-content: center;
   align-content: center;
   margin: 0 auto;
-  font-family: 'Press Start 2P', cursive;
+  font-family: 'Play', sans-serif;
 }
 
 .game-over {
@@ -171,10 +171,14 @@ h1::after {
   font-size: 26px;
   border: 3px solid #fff;
   border-radius: 20px;
+  background: red;
+  padding: 15px 30px;
+
 }
 
 .reset:hover{
-  
+  background: white;
+  opacity: 0.6;
 }
 
 /* API */

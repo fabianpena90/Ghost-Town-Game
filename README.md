@@ -6,3 +6,4 @@ A game where you have to be really brave to survive!
 - CSS3
 - JavaScript
 - Canvas
+- ZapSplat (Audio Efects)
