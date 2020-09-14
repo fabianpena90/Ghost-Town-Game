@@ -1,5 +1,5 @@
 body {
-  background: url('/img/backgroundpage.jpg') no-repeat;
+  background: url('../img/backgroundpage.jpg') no-repeat;
   overflow: hidden;
   font-family: 'Press Start 2P', cursive;
 }

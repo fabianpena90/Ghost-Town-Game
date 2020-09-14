@@ -2,25 +2,23 @@
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 const background = new Image();
-background.src = 'img/scareBackground.jpg';
+background.src = './img/scareBackground.jpg';
 const avatar = new Image();
-avatar.src = 'img/potter.png';
+avatar.src = '../img/potter.png';
 const thugs = new Image();
-thugs.src = 'img/eyeHanging.png';
+thugs.src = '../img/eyeHanging.png';
 const ghost = new Image();
-ghost.src = 'img/ghost.png';
+ghost.src = '../img/ghost.png';
 const malo = new Image();
-malo.src = 'img/malo.png';
+malo.src = '../img/malo.png';
 const boom = new Image();
-boom.src = 'img/fire.png';
-const coin = new Image();
-coin.src = '/img/coins.png';
-const scaryAudio = new Audio('audio/evilLaugh.mp3');
-const piupiu = new Audio('audio/gunshot.mp3');
-const explosion = new Audio('audio/explosion.mp3');
-const ouch = new Audio('audio/ouch.mp3');
-const gameOver = new Audio('audio/gameOver.mp3');
-const gameSong = new Audio('audio/gameSong.mp3');
+boom.src = '../img/fire.png';
+const scaryAudio = new Audio('../audio/evilLaugh.mp3');
+const piupiu = new Audio('../audio/gunshot.mp3');
+const explosion = new Audio('../audio/explosion.mp3');
+const ouch = new Audio('../audio/ouch.mp3');
+const gameOver = new Audio('../audio/gameOver.mp3');
+const gameSong = new Audio('../audio/gameSong.mp3');
 let id = null;
 
 // Class players
@@ -105,7 +103,7 @@ class Enemies {
         ouch.play()
         reset()
     }
-    if (player1.score === 50) {
+    if (player1.score === 25) {
       // youWin();
       window.cancelAnimationFrame(id)
       alert('YOU WIN 👻')
